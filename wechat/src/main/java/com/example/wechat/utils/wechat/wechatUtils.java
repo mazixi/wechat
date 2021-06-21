@@ -89,7 +89,7 @@ public class wechatUtils {
 				text.put("content","当前时间为："+ nowTime +"，中午好!去吃饭吧！铁汁们！");
 			}
 			if (desc!=null && nowTimes.equals(nightTime)){
-					text.put("content","当前时间为："+ nowTime +"！！！"+desc+"，今天最后一天班，下班后好好休息吧！");
+					text.put("content","当前时间为："+ nowTime +"！！！"+desc+"，下班后好好休息吧！");
 			}else if (nowTimes.equals(nightTime)){
 					text.put("content","当前时间为："+ nowTime +"，下班啦!铁汁们");
 			}
