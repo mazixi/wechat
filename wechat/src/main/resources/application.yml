@@ -1,6 +1,0 @@
-# 节假日 appcode 为密钥 链接每天可以调用100 超过收费
-holiday:
-  url: https://api.topthink.com/calendar/month
-  appcode: 614d91184cbda3282c6810b29856b4ec
-
-
