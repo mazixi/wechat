@@ -36,6 +36,8 @@ public class timeTaskSendMessageRoot implements ApplicationRunner {
         long initDelayTwo  = RootUtils.getTimeMillis("12:30") - System.currentTimeMillis();
         long initDelayThree  = RootUtils.getTimeMillis("18:30") - System.currentTimeMillis();
         initDelay = initDelay >= 0 ? initDelay : oneDay + initDelay;
+        initDelayTwo = initDelayTwo >= 0 ? initDelayTwo : oneDay + initDelayTwo;
+        initDelayThree = initDelayThree >= 0 ? initDelayThree : oneDay + initDelayThree;
         executor.scheduleAtFixedRate(
                 new EchoServer(),
                 initDelay,

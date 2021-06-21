@@ -96,7 +96,6 @@ public class wechatUtils {
 			obj.put("msgtype", "text");
 			obj.put("text", text);
 			obj.put("safe", 0);
-			System.out.println(text.getString("content"));
 			String sr = doPost("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b4a30fc5-7963-42d3-87f4-9905c8e17584", obj.toString());
 			obj = JSONObject.parseObject(sr);
 			log.info(sr);

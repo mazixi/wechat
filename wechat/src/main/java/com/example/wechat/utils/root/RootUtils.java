@@ -22,21 +22,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class RootUtils {
     private static final Logger log = LoggerFactory.getLogger(RootUtils.class);
-    public static void rootTime(String time) {
-        ScheduledExecutorService executor =  new ScheduledThreadPoolExecutor(3,
-                new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
-        long oneDay = 24 * 60 * 60 * 1000;
-//        long oneDay =  20 * 1000;
-
-//        long initDelay  = 0;
-        long initDelay  = RootUtils.getTimeMillis(time) - System.currentTimeMillis();
-        initDelay = initDelay >= 0 ? initDelay : oneDay + initDelay;
-        executor.scheduleAtFixedRate(
-                new EchoServer(),
-                initDelay,
-                oneDay,
-                TimeUnit.MILLISECONDS);
-    }
     /**
      * 获取指定时间对应的毫秒数
      * @param time "HH:mm:ss"
@@ -52,22 +37,5 @@ public class RootUtils {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    static class EchoServer implements Runnable {
-        @Override
-        public void run() {
-            try {
-                //每天六点半发消息
-                JSONObject jsonObject = wechatUtils.sendMessageForTime();
-                Integer errcode = jsonObject.getInteger("errcode");
-                String invaliduser = jsonObject.getString("invaliduser");
-                if (!errcode.equals(0)){
-                    log.info("出错了！"+invaliduser);
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
     }
 }
