@@ -60,11 +60,11 @@ public class timeTaskSendMessageRoot implements ApplicationRunner {
             try {
                 //每天六点半发消息
                 JSONObject jsonObject = wechatUtils.sendMessageForTime();
-//                Integer errcode = jsonObject.getInteger("errcode");
-//                String invaliduser = jsonObject.getString("invaliduser");
-//                if (!errcode.equals(0)){
-//                    log.info("出错了！"+invaliduser);
-//                }
+                Integer errcode = jsonObject.getInteger("errcode");
+                String errmsg = jsonObject.getString("errmsg");
+                if (!errcode.equals(0)){
+                    log.info("出错了！"+errmsg);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
