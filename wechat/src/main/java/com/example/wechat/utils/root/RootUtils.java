@@ -29,7 +29,7 @@ public class RootUtils {
      */
     public static long getTimeMillis(String time) {
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             DateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date curDate = dateFormat.parse(dayFormat.format(new Date()) + " " + time);
             return curDate.getTime();
