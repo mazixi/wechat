@@ -32,9 +32,9 @@ public class timeTaskSendMessageRoot implements ApplicationRunner {
         ScheduledExecutorService executor =  new ScheduledThreadPoolExecutor(3,
                 new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
         long oneDay = 24 * 60 * 60 * 1000;
-        long initDelay  = RootUtils.getTimeMillis("09:00") - System.currentTimeMillis();
-        long initDelayTwo  = RootUtils.getTimeMillis("12:30") - System.currentTimeMillis();
-        long initDelayThree  = RootUtils.getTimeMillis("18:30") - System.currentTimeMillis();
+        long initDelay  = RootUtils.getTimeMillis("09:00:00") - System.currentTimeMillis();
+        long initDelayTwo  = RootUtils.getTimeMillis("12:30:00") - System.currentTimeMillis();
+        long initDelayThree  = RootUtils.getTimeMillis("18:30:00") - System.currentTimeMillis();
         initDelay = initDelay >= 0 ? initDelay : oneDay + initDelay;
         initDelayTwo = initDelayTwo >= 0 ? initDelayTwo : oneDay + initDelayTwo;
         initDelayThree = initDelayThree >= 0 ? initDelayThree : oneDay + initDelayThree;
