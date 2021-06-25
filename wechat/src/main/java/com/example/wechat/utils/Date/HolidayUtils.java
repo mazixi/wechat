@@ -3,6 +3,7 @@ package com.example.wechat.utils.Date;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.wechat.bean.Holiday;
+import com.example.wechat.bean.HolidayCofig;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,12 +24,12 @@ public class HolidayUtils {
     private String appUrl = "https://api.topthink.com/calendar/month";
     private String appcode = "614d91184cbda3282c6810b29856b4ec";
 
-
     /**
      * 每月更新节假日 每月一号执行
+     * @param holidayCofig
      */
     @Scheduled(cron = "0 0 2 1 * ? *")
-    public List<Holiday> holiday() {
+    public List<Holiday> holiday(HolidayCofig holidayCofig) {
         String ny = DateUtil.getny();
         List<Holiday> holidays = new ArrayList<>();
         try {
@@ -40,10 +41,10 @@ public class HolidayUtils {
             headers.add("Accept", MediaType.APPLICATION_JSON.toString());
             JSONObject map = new JSONObject();
             map.put("yearMonth", ny);
-            map.put("appCode",appcode);
+            map.put("appCode",holidayCofig.getAppcode());
             HttpEntity<Map> requestEntity = new HttpEntity<>(map, headers);
 
-            String post = restTemplate.postForObject(appUrl, requestEntity, String.class);
+            String post = restTemplate.postForObject(holidayCofig.getUrl(), requestEntity, String.class);
 
             if (post == null || "".equals(post) || !post.contains("\"code\":0")) {
                 return null;

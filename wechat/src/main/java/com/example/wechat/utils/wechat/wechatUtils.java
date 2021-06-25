@@ -1,6 +1,7 @@
 package com.example.wechat.utils.wechat;
 
 import com.example.wechat.bean.Holiday;
+import com.example.wechat.bean.HolidayCofig;
 import com.example.wechat.utils.Date.DateUtil;
 import com.example.wechat.utils.Date.HolidayUtils;
 import org.apache.commons.httpclient.HttpStatus;
@@ -68,29 +69,29 @@ public class wechatUtils {
 	 * 推送消息到企业微信
 	 *
 	 * @return
+	 * @param time
 	 * @param desc
 	 */
-	public static JSONObject sendMessageRoot(String desc) {
+	public static JSONObject sendMessageRoot(String desc,String time) {
 		JSONObject obj = new JSONObject();
 		JSONObject text = new JSONObject();
 		try {
 			//推送消息格式
 			DateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			String nowTime = dayFormat.format(new Date());
-			DateFormat everyDayFormat = new SimpleDateFormat("HH:mm");
-			String nowTimes = everyDayFormat.format(new Date());
-			String moinTime = everyDayFormat.format(everyDayFormat.parse("09:00"));
-			String noonTime = everyDayFormat.format(everyDayFormat.parse("12:30"));
-			String nightTime = everyDayFormat.format(everyDayFormat.parse("18:30"));
-			if (nowTimes.equals(moinTime)){
+
+			String moinTime = "09:00:00";
+			String noonTime = "12:30:00";
+			String nightTime = "18:30:00";
+			if (time.equals(moinTime)){
 				text.put("content","当前时间为："+ nowTime +"，早上好!铁汁们！");
 			}
-			if (nowTimes.equals(noonTime)){
+			if (time.equals(noonTime)){
 				text.put("content","当前时间为："+ nowTime +"，中午好!去吃饭吧！铁汁们！");
 			}
-			if (desc!=null && nowTimes.equals(nightTime)){
+			if (desc!=null && time.equals(nightTime)){
 					text.put("content","当前时间为："+ nowTime +"！！！"+desc+"，下班后好好休息吧！");
-			}else if (nowTimes.equals(nightTime)){
+			}else if (time.equals(nightTime)){
 					text.put("content","当前时间为："+ nowTime +"，下班啦!铁汁们");
 			}
 			obj.put("msgtype", "text");
@@ -108,11 +109,13 @@ public class wechatUtils {
 	/**
 	 * 判断是否为节假日
 	 * @return
+	 * @param holidayCofig
+	 * @param everyDayFormat
 	 */
-	public static JSONObject sendMessageForTime(){
+	public static JSONObject sendMessageForTime(HolidayCofig holidayCofig, String everyDayFormat){
 		JSONObject jsonObjects = new JSONObject();
 		HolidayUtils holidayUtils = new HolidayUtils();
-		List<Holiday> holidays = holidayUtils.holiday();
+		List<Holiday> holidays = holidayUtils.holiday(holidayCofig);
 		List<Date> dates = holidays.stream().map(Holiday::getHolidayDate).collect(Collectors.toList());
 		DateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String nowTimes = dayFormat.format(new Date());
@@ -140,11 +143,11 @@ public class wechatUtils {
 				List<Holiday> holidayList = holidays.stream().filter(holiday -> holiday.getHolidayDate().equals(date1)).collect(Collectors.toList());
 				desc = holidayList.get(0).getDesc();
 				//今天正常提醒
-				jsonObjects = wechatUtils.sendMessageRoot(desc);
+				jsonObjects = wechatUtils.sendMessageRoot(desc,everyDayFormat);
 
 			}else{
 				//明天是工作日,正常提醒
-				jsonObjects = wechatUtils.sendMessageRoot(desc);
+				jsonObjects = wechatUtils.sendMessageRoot(desc,everyDayFormat);
 			}
 
 		}
