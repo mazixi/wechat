@@ -1,7 +1,6 @@
 package com.example.wechat;
 
 import com.example.wechat.bean.Holiday;
-import com.example.wechat.utils.cofig.AssociationFieldHandlerUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
